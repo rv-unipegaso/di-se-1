@@ -1,11 +1,22 @@
 package it.unipegaso.model;
 
+import it.unipegaso.business.FactoryMethod.NotificationFactory;
+
 public class Cliente {
 
     private int id;
     private String nome;
     private String cognome;
     private String mail;
+    private NotificationFactory.TIPO_NOTIFICA canalePreferito;
+
+    public NotificationFactory.TIPO_NOTIFICA getCanalePreferito() {
+        return canalePreferito;
+    }
+
+    public void setCanalePreferito(NotificationFactory.TIPO_NOTIFICA canalePreferito) {
+        this.canalePreferito = canalePreferito;
+    }
 
     public int getId() {
         return id;

@@ -2,6 +2,11 @@ package it.unipegaso;
 
 import it.unipegaso.DAO.ProdottoDAO;
 import it.unipegaso.business.ClienteBusiness;
+import it.unipegaso.business.FactoryMethod.Notifica;
+import it.unipegaso.business.FactoryMethod.NotificationFactory;
+import it.unipegaso.business.observer.Cameriere;
+import it.unipegaso.business.observer.Cucina;
+import it.unipegaso.business.observer.Ordine;
 import it.unipegaso.business.strategy.CommentiMiglioriStrategy;
 import it.unipegaso.business.strategy.CommentiPiuRecentiStrategy;
 import it.unipegaso.business.strategy.IOrdinamentoCommentiStrategy;
@@ -20,6 +25,28 @@ import java.util.Iterator;
 public class MainClass {
 
     public static void main(String args[]) {
+
+        //factory method
+        Cliente c = new Cliente();
+        c.setCognome("Vergallo");
+        c.setCanalePreferito(NotificationFactory.TIPO_NOTIFICA.EMAIL);
+        NotificationFactory factory = new NotificationFactory();
+        Notifica n = factory.creaNotifica(c.getCanalePreferito());
+        n.setMsg("Messaggio di test");
+        n.setCliente(c);
+        n.inviaNotifica();
+
+
+        //observer
+        Ordine o = new Ordine();
+        Cameriere cl = new Cameriere();
+        cl.prendeOrdine(o);
+        o.subscribe(cl);
+
+        Cucina.getInstance().preparaOrdine();
+        Cucina.getInstance().chiudiOrdine();
+
+
         System.out.println("Hello world!");
 
         DecoratorView decoratorView = new DecoratorView();
