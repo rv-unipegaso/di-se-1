@@ -1,6 +1,13 @@
 package it.unipegaso;
 
 import it.unipegaso.DAO.ProdottoDAO;
+import it.unipegaso.business.AbstractFactory.AbstractFactory;
+import it.unipegaso.business.AbstractFactory.FactoryProvider;
+import it.unipegaso.business.AbstractFactory.IBevanda;
+import it.unipegaso.business.AbstractFactory.IPanino;
+import it.unipegaso.business.Bridge.Documento;
+import it.unipegaso.business.Bridge.Fattura;
+import it.unipegaso.business.Bridge.PdfBox20API;
 import it.unipegaso.business.ClienteBusiness;
 import it.unipegaso.business.FactoryMethod.Notifica;
 import it.unipegaso.business.FactoryMethod.NotificationFactory;
@@ -18,13 +25,52 @@ import it.unipegaso.model.Commento;
 import it.unipegaso.model.Prodotto;
 import it.unipegaso.view.DecoratorView;
 import it.unipegaso.view.LoginView;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MainClass {
 
     public static void main(String args[]) {
+
+        //codice di esempio per creare pdf
+        /*
+        try(PDDocument doc = new PDDocument()) {
+
+            PDPage page = new PDPage();
+            doc.addPage(page);
+
+            try(PDPageContentStream contents = new PDPageContentStream(doc, page)) {
+                contents.beginText();
+                contents.setFont(PDType1Font.HELVETICA, 16);
+                contents.newLineAtOffset(100, 700);
+                contents.showText("Ciao a tutti!");
+                contents.endText();
+            }
+
+            File tempFile = File.createTempFile("myshop_", ".pdf");
+            System.out.println(tempFile);
+
+            doc.save(tempFile.getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        //versione con l'API (bridge)
+        Documento doc = new Fattura(new PdfBox20API());
+        doc.salvaDocumento("Tutto il testo che vogliamo");
+
+        //abstract factory
+        FactoryProvider.FactoryType type = FactoryProvider.FactoryType.MENU_CLASSICO;
+        AbstractFactory abstractFactory = FactoryProvider.getFactory(type);
+        IPanino panino = abstractFactory.creaPanino();
+        IBevanda bevanda = abstractFactory.creaBevanda();
 
         //factory method
         Cliente c = new Cliente();
