@@ -1,8 +1,11 @@
 package it.unipegaso;
 
+import it.unipegaso.business.UtenteBusiness;
 import it.unipegaso.dao.UtenteDAO;
 import it.unipegaso.dbconnection.DbConnection;
 import it.unipegaso.model.Utente;
+import it.unipegaso.model.decorator.DecoratorView;
+import it.unipegaso.view.LoginView;
 
 import java.sql.ResultSet;
 
@@ -31,6 +34,17 @@ public class Main {
         if(u!=null)
             System.out.println("Ciao "+u.getNome());
 
+        // lezione su architettura standalone
+        LoginView loginView = new LoginView();
+
+        if(args!=null && args.length>1) {
+            String email = args[0];
+            String password = args[1];
+            UtenteBusiness utenteBusiness = new UtenteBusiness();
+            utenteBusiness.login(email, password);
+        }
+
+        DecoratorView decoratorView = new DecoratorView();
 
     }
 
