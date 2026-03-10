@@ -10,6 +10,8 @@ public class LoginListener implements ActionListener {
 
     private LoginView loginView;
 
+    private static UtenteBusiness instance;
+
     public LoginListener(LoginView loginView) {
         this.loginView = loginView;
     }
@@ -19,7 +21,7 @@ public class LoginListener implements ActionListener {
         System.out.println("Email: " + loginView.getEmail().getText());
         System.out.println("Password: " + new String(loginView.getPassword().getPassword()));
 
-        UtenteBusiness utenteBusiness = new UtenteBusiness();
+        UtenteBusiness utenteBusiness = UtenteBusiness.getInstance();
         boolean loginOk = utenteBusiness.login(loginView.getEmail().getText(), new String(loginView.getPassword().getPassword()));
 
         if(loginOk) {

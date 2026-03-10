@@ -1,10 +1,13 @@
 package it.unipegaso.model;
 
+import java.util.List;
+
 public class Prodotto {
 
     private int idprodotto;
     private String nome;
     private Float prezzo;
+    private List<Commento> commenti;
 
     public int getIdprodotto() {
         return idprodotto;
