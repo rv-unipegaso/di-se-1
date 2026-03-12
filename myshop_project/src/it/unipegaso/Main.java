@@ -9,6 +9,7 @@ import it.unipegaso.dbconnection.DbConnection;
 import it.unipegaso.model.Commento;
 import it.unipegaso.model.Utente;
 import it.unipegaso.model.decorator.DecoratorView;
+import it.unipegaso.model.decorator.Menu;
 import it.unipegaso.view.LoginView;
 
 import java.sql.ResultSet;
@@ -65,6 +66,8 @@ public class Main {
         ordinamentoCommenti.setCommenti(commenti);
         ordinamentoCommenti.setOrdinamentoCommentiStrategy(ordinamentoCommentiStrategy);
         ordinamentoCommenti.ordina();
+
+        //Menu m = new Menu();
 
     }
 

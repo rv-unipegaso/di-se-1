@@ -11,10 +11,10 @@ public class DecoratorView extends JFrame {
         setLayout(new GridLayout(3,1));
 
         Menu guestMenu = new GuestMenu();
-        Menu clienteMenu = new ClienteMenuDecorator(guestMenu);
         Menu managerMenu = new ManagerMenuDecorator(guestMenu);
+        Menu clienteMenu = new ClienteMenuDecorator(managerMenu);
 
-        for(JButton btn : managerMenu.getPulsanti())
+        for(JButton btn : clienteMenu.getPulsanti())
             add(btn);
 
         setSize(400,300);

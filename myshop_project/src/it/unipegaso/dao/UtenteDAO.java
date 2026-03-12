@@ -1,6 +1,9 @@
 package it.unipegaso.dao;
 
 import it.unipegaso.dbconnection.DbConnection;
+import it.unipegaso.dbconnection.command.DbOperationExecutor;
+import it.unipegaso.dbconnection.command.IDbOperation;
+import it.unipegaso.dbconnection.command.ReadOperation;
 import it.unipegaso.model.Utente;
 
 import java.sql.ResultSet;
@@ -14,7 +17,16 @@ public class UtenteDAO {
 
         Utente u = new Utente();
 
+        DbOperationExecutor executor = new DbOperationExecutor();
+        String sql = "SELECT * FROM utente WHERE idutente='"+idUtente+"';";
+        IDbOperation readOp = new ReadOperation(sql);
+        ResultSet rs = executor.executeOperation(readOp).getResultSet();
+
+        //implementazione senza design pattern Command
+        /*
         ResultSet rs = DbConnection.getInstance().executeQuery("SELECT * FROM utente WHERE idutente='"+idUtente+"';");
+        */
+
 
         try {
             while (rs.next()) {
@@ -27,6 +39,7 @@ public class UtenteDAO {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
 
         return u;
     }

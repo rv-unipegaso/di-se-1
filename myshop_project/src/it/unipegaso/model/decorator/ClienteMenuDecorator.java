@@ -9,6 +9,7 @@ public class ClienteMenuDecorator extends MenuDecorator {
         this.menu = menu;
     }
 
+    @Override
     public List<JButton> getPulsanti() {
         pulsanti.addAll(this.menu.getPulsanti());
         JButton profilo = new JButton("Il mio profilo");
