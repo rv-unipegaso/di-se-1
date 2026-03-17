@@ -1,6 +1,11 @@
 package it.unipegaso;
 
 import it.unipegaso.business.UtenteBusiness;
+import it.unipegaso.business.factoryMethod.Notifica;
+import it.unipegaso.business.factoryMethod.NotificationFactory;
+import it.unipegaso.business.observer.Cameriere;
+import it.unipegaso.business.observer.Cucina;
+import it.unipegaso.business.observer.Ordine;
 import it.unipegaso.business.strategy.CommentiMiglioriStrategy;
 import it.unipegaso.business.strategy.IOrdinamentoCommentiStrategy;
 import it.unipegaso.business.strategy.OrdinamentoCommenti;
@@ -68,6 +73,28 @@ public class Main {
         ordinamentoCommenti.ordina();
 
         //Menu m = new Menu();
+
+        //test design pattern observer
+        Ordine ordine = new Ordine();
+        Cameriere cameriere = new Cameriere();
+        ordine.subscribe(cameriere);
+
+        Cucina.getInstance().riceviOrdine(ordine); //in realtà si dovrebbe passare dalla classe Cameriere...
+
+        Cucina.getInstance().preparaOrdine();
+        Cucina.getInstance().chiudiOrdine();
+
+        //test del factory method
+        Utente utente = new Utente();
+        utente.setNome("Roberto");
+        utente.setCognome("Vergallo");
+        //settare tutte le variabili che servono alle classi concrete per funzionare (es. indirizzo email ecc)
+
+        NotificationFactory factory = new NotificationFactory();
+        Notifica n = factory.creaNotifica(NotificationFactory.TIPO_NOTIFICA.SMS); //la preferenza andrebbe presa ad esempio da un campo del database
+        n.setDestinatario(utente);
+        n.setMessaggio("Questo è un messaggio di prova");
+        n.inviaNotifica();
 
     }
 
