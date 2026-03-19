@@ -1,6 +1,13 @@
 package it.unipegaso;
 
 import it.unipegaso.business.UtenteBusiness;
+import it.unipegaso.business.abstractFactory.IBevanda;
+import it.unipegaso.business.abstractFactory.IPanino;
+import it.unipegaso.business.abstractFactory.MenuFactory;
+import it.unipegaso.business.abstractFactory.MenuFactoryProvider;
+import it.unipegaso.business.bridge.Documento;
+import it.unipegaso.business.bridge.Fattura;
+import it.unipegaso.business.bridge.PdfBox2035API;
 import it.unipegaso.business.factoryMethod.Notifica;
 import it.unipegaso.business.factoryMethod.NotificationFactory;
 import it.unipegaso.business.observer.Cameriere;
@@ -96,6 +103,15 @@ public class Main {
         n.setMessaggio("Questo è un messaggio di prova");
         n.inviaNotifica();
 
+        //test dell'abstract factory
+        MenuFactoryProvider.FactoryType type = MenuFactoryProvider.FactoryType.MENU_KIDS; // arriva dall'ordine fatto dal cliente
+        MenuFactory menuFactory = MenuFactoryProvider.getFactory(type);
+        IPanino panino = menuFactory.creaPanino();
+        IBevanda bevanda = menuFactory.creaBevanda();
+
+        //test del bridge
+        Documento doc = new Fattura(new PdfBox2035API());
+        doc.salvaDocumento("Riepilogo del tuo ordine");
     }
 
 }
